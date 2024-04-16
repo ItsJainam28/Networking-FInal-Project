@@ -1,3 +1,17 @@
+"""
+COMP216 - Final Project - Subscriber GUI
+
+Group: 1
+Group Members:
+    Handa, Karan
+    Ngan, Tsang Kwong
+    Patel, Jainam
+    Wong, Yu Kwan
+    ZHANG, AILIN
+
+Date: April 16, 2024
+"""
+
 import threading
 import time
 import tkinter as tk
@@ -6,8 +20,26 @@ from SubscriberTableGUI import SubscriberTableGUI
 from wk14_email import EmailSender
 
 class SubscriberGUI:
+    """
+    A GUI application for subscribing to temperature data and displaying it in a chart.
+
+    Attributes:
+        subcriberGUI (SubscriberTableGUI): The table GUI for displaying subscriber data.
+        email_sender (EmailSender): The email sender for sending notifications.
+        subscriber (Subscriber): The subscriber for receiving temperature data.
+        chart (DisplayChart): The chart for displaying temperature data.
+        _running (bool): Flag indicating if the subscription is running.
+        _items_per_page (int): Number of items per page in the chart.
+        _update_thread (Thread): Thread for updating data and drawing the chart.
+    """
 
     def __init__(self, master):
+        """
+        Initializes the SubscriberGUI.
+
+        Args:
+            master (Tk): The root Tkinter window.
+        """
         self.subcriberGUI = SubscriberTableGUI(master)
         self.create_widgets()
         self.email_sender = EmailSender()
@@ -26,6 +58,9 @@ class SubscriberGUI:
         self._update_thread = None
 
     def create_widgets(self):
+        """
+        Creates the GUI widgets.
+        """
         self.frame = tk.Frame(self.subcriberGUI.root)
         self.frame.pack(padx=10, pady=10)
         # Button to start subscribing
@@ -37,6 +72,9 @@ class SubscriberGUI:
         self.stop_button.pack(pady=10)
 
     def start_subscribing(self):
+        """
+        Starts the subscription process.
+        """
         self.subcriberGUI.start_subscribing()
         self.start_button.config(state=tk.DISABLED)
         self.stop_button.config(state=tk.NORMAL)
@@ -49,12 +87,18 @@ class SubscriberGUI:
             self._update_thread.start()
 
     def stop_subscribing(self):
+        """
+        Stops the subscription process.
+        """
         self.subcriberGUI.stop_subscribing()
         self.start_button.config(state=tk.NORMAL)
         self.stop_button.config(state=tk.DISABLED)
         self._running = False  # Stop the thread
 
     def _update_data_and_draw_chart(self):
+        """
+        Updates the data and draws the chart periodically.
+        """
         while len(self.subscriber.data_points) == 0:
             time.sleep(1)
         print("Data points:", self.subscriber.data_points)
@@ -68,9 +112,11 @@ class SubscriberGUI:
 
     def draw_chart(self, start_index: int = 0, end_index: int = None):
         """
-        Draw the chart.
-        :param start_index: The start index of the data points.
-        :param end_index: The end index of the data points.
+        Draws the chart.
+
+        Args:
+            start_index (int): The start index of the data points.
+            end_index (int): The end index of the data points.
         """
         end_index = end_index or min(len(self.subscriber.data_points), start_index + self._items_per_page)
         self.chart.clear()
@@ -80,6 +126,9 @@ class SubscriberGUI:
 
 
 def main():
+    """
+    Entry point of the application.
+    """
     root = tk.Tk()
     app = SubscriberGUI(root)
     root.mainloop()

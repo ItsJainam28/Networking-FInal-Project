@@ -1,3 +1,16 @@
+"""
+COMP216 - Final Project - Email Module
+
+Group: 1
+Group Members:
+    Handa, Karan
+    Ngan, Tsang Kwong
+    Patel, Jainam
+    Wong, Yu Kwan
+    ZHANG, AILIN
+
+Date: April 16, 2024
+"""
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
