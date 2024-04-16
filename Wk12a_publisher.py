@@ -47,7 +47,7 @@ class Publisher(Util):
         self.port = 1883
         self.callback_api_ver = mqtt.CallbackAPIVersion.VERSION2
         self.client_id = "COMP216-2024-GP1"
-        self.topic = "TEMP-COMP216-GP1"
+        self.topic = "KEVIN-COMP216-GP1"
 
     def convert_to_json(self):
         """
@@ -98,6 +98,8 @@ class Publisher(Util):
             self.on_publish(self.client_pub, data)
         except Exception as e:
             raise e
+        
+        return data
 
     def on_publish(self, client, userdata):
         """
@@ -107,7 +109,6 @@ class Publisher(Util):
             client (mqtt.Client): The MQTT client instance.
             userdata: The user data associated with the client.
         """
-        print(client)
         print(userdata)
 
     def disconnect(self):
@@ -124,6 +125,4 @@ if __name__ == "__main__":
     pub.create_client()
     while True:
         pub.publish_data()
-        time.sleep(2)
-
-#pub.disconnect()
+        time.sleep(5)

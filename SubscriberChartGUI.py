@@ -342,4 +342,4 @@ class DisplayChartApp:
             # Call the method to display list on the canvas
             self.draw_chart()
             # Sleep for a short while (0.5 of a second)
-            time.sleep(2)
+            time.sleep(5)

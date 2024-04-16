@@ -10,6 +10,7 @@ class SubscriberGUI:
     def __init__(self, master):
         self.subcriberGUI = SubscriberTableGUI(master)
         self.create_widgets()
+        self.email_sender = EmailSender()
         self.subscriber = Subscriber()
         self.subscriber.create_client()
         self.subcriberGUI.update_data_display()
@@ -58,10 +59,12 @@ class SubscriberGUI:
             time.sleep(1)
         print("Data points:", self.subscriber.data_points)
         while self._running:
+            if self.subscriber.data_points[-1] >= 24:
+                self.email_sender.send_email(f"Sensor detected an extreme temperture: {self.subscriber.data_points[-1]} C")
             # Call the method to display list on the canvas
             self.draw_chart()
-            # Sleep for a short while (2 seconds)
-            time.sleep(2)
+            # Sleep for a short while (5 seconds)
+            time.sleep(5)
 
     def draw_chart(self, start_index: int = 0, end_index: int = None):
         """
@@ -75,6 +78,12 @@ class SubscriberGUI:
         self.chart.draw_x_axis("Time", self.subscriber.data_ids[start_index:end_index])
         self.chart.draw_y_axis("Temperature", 1, "C")
 
-root = tk.Tk()
-app = SubscriberGUI(root)
-root.mainloop()
+
+def main():
+    root = tk.Tk()
+    app = SubscriberGUI(root)
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    main()

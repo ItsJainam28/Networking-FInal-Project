@@ -74,7 +74,7 @@ class SubscriberTableGUI:
                 self.subscriber.data_ids.pop(0)
                 self.subscriber.data_points.pop(0)
                 self.subscriber.data_level.pop(0)
-            time.sleep(1)  # Check for new data every 1 second
+            time.sleep(5)  # Check for new data every 1 second
 
     def display_data(self, data_dict):
         """ 

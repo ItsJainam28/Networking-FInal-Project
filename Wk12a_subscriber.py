@@ -40,7 +40,7 @@ class Subscriber:
         self.port = 1883
         self.client_id = "COMP216-2024-GP1"
         self.callback_api_ver = mqtt.CallbackAPIVersion.VERSION2
-        self.topic = "TEMP-COMP216-GP1"
+        self.topic = "KEVIN-COMP216-GP1"
         self.data_points = []
         self.data_ids = []
         self.data_level = []
@@ -123,10 +123,14 @@ class Subscriber:
         Args:
             dictionary (dict): The dictionary to print.
         """
-        print("id:", dictionary['id'])
-        print("time:", dictionary['time'])
-        print("temp:", dictionary['temp'])
-        print("level:", dictionary['level'])
+        if dictionary['id']:
+            print("id:", dictionary['id'])
+        if dictionary['time']:
+            print("time:", dictionary['time'])
+        if dictionary['temp']:
+            print("temp:", dictionary['temp'])
+        if dictionary['level']:
+            print("level:", dictionary['level'])
     
     def unsubscribe(self):
         """
@@ -144,3 +148,5 @@ class Subscriber:
 if __name__ == "__main__":
     sub = Subscriber()
     sub.create_client()
+    sub.client.loop_forever()
+
