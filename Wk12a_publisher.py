@@ -48,6 +48,8 @@ class Publisher(Util):
         self.callback_api_ver = mqtt.CallbackAPIVersion.VERSION2
         self.client_id = "COMP216-2024-GP1"
         self.topic = "TEMP-COMP216-GP1"
+        # using qos of 1
+        self.qos = 2
 
     def convert_to_json(self):
         """
@@ -119,11 +121,11 @@ class Publisher(Util):
 
 
 
-if __name__ == "__main__":
-    pub = Publisher()
-    pub.create_client()
-    while True:
-        pub.publish_data()
-        time.sleep(2)
+# if __name__ == "__main__":
+#     pub = Publisher()
+#     pub.create_client()
+#     while True:
+#         pub.publish_data()
+#         time.sleep(2)
 
 #pub.disconnect()

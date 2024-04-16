@@ -23,6 +23,7 @@ class SubscriberGUI:
         self._running = False
         self._items_per_page = 6
         self._update_thread = None
+        # self.bg = "green"
 
     def create_widgets(self):
         self.frame = tk.Frame(self.subcriberGUI.root)
@@ -61,7 +62,7 @@ class SubscriberGUI:
             # Call the method to display list on the canvas
             self.draw_chart()
             # Sleep for a short while (2 seconds)
-            time.sleep(2)
+            time.sleep(1)
 
     def draw_chart(self, start_index: int = 0, end_index: int = None):
         """

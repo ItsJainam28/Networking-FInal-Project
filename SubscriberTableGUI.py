@@ -15,7 +15,7 @@ class SubscriberTableGUI:
         self.subscriber = Subscriber()  # Initialize an instance of your Subscriber class
         self.create_widgets()
         self.subscriber_thread_started = False  # Flag to track whether subscriber thread has started
-
+        self.bg = "green"
     def create_widgets(self):
         # Create a frame for organizing widgets
         self.frame = tk.Frame(self.root)
@@ -31,6 +31,7 @@ class SubscriberTableGUI:
         self.tree.heading("Time", text="Time")
         self.tree.heading("Temperature", text="Temperature")
         self.tree.heading("Level", text="Level")
+        self.tree.tag_configure("red", background="red")    
         self.tree.pack()
 
         # # Button to start subscribing
@@ -74,7 +75,7 @@ class SubscriberTableGUI:
                 self.subscriber.data_ids.pop(0)
                 self.subscriber.data_points.pop(0)
                 self.subscriber.data_level.pop(0)
-            time.sleep(1)  # Check for new data every 1 second
+            time.sleep(2)  # Check for new data every 1 second
 
     def display_data(self, data_dict):
         """ 
@@ -83,7 +84,10 @@ class SubscriberTableGUI:
         Args:
             data_dict (dict): The dictionary containing the received data.
         """
-        self.tree.insert("", tk.END, values=(data_dict["id"], data_dict["time"], data_dict["temp"], data_dict["level"]))
+        self.bg = "white"
+        if(data_dict["level"] == "extreme"):
+            self.bg = "red"
+        self.tree.insert("", tk.END, values=(data_dict["id"], data_dict["time"], data_dict["temp"], data_dict["level"]), tags=(self.bg))
 
 
 # if __name__ == "__main__":

@@ -12,7 +12,7 @@ class PublisherGUI:
 
         self.publisher = Publisher()  # Initialize an instance of your Publisher class
         self.data_table = None
-
+        self.bg = "white"
         self.create_widgets()
 
     def create_widgets(self):
@@ -42,7 +42,7 @@ class PublisherGUI:
         self.data_table.heading("Temperature", text="Temperature")
         self.data_table.heading("Level", text="Level")
         self.data_table.pack(padx=10, pady=10)
-
+        self.data_table.tag_configure("red", background="red")
     def start_publishing(self):
         self.publisher.create_client()
         self.status_label.config(text="Status: Publishing", bg="green")
@@ -74,12 +74,15 @@ class PublisherGUI:
         self.start_button.config(state=tk.NORMAL)
         self.stop_button.config(state=tk.DISABLED)
 
+    
     def display_data(self, data):
         # Parse JSON data
         data_dict = json.loads(data)
-        
+        self.bg = "white"
+        if(data_dict["level"] == "extreme"):
+            self.bg = "red"
         # Insert data into table
-        self.data_table.insert("", "end", values=(data_dict["id"], data_dict["time"], data_dict["temp"], data_dict["level"]))
+        self.data_table.insert("", "end", values=(data_dict["id"], data_dict["time"], data_dict["temp"], data_dict["level"]), tags=(self.bg))
 
 if __name__ == "__main__":
     root = tk.Tk()

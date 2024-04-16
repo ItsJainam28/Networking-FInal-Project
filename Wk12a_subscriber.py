@@ -44,7 +44,7 @@ class Subscriber:
         self.data_points = []
         self.data_ids = []
         self.data_level = []
-
+        
     def create_client(self):
         """
         Creates an MQTT client and connects to the broker.
